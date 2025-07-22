@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel Cambial Interativo - Impress</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.4.4/luxon.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js" defer></script>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="container py-16">
+      <h1>Painel Cambial Interativo</h1>
+      <p class="text-base">Fonte de dados: Banco Central do Brasil - Cotações PTAX</p>
+    </header>
+
+    <main class="container flex flex-col gap-16">
+      <!-- Boxes de Cotações Atuais -->
+      <section class="current-rates-section">
+        <h2 class="section-title">Cotações PTAX de Fechamento</h2>
+        <div class="current-rates-grid">
+          <div class="rate-box usd-box">
+            <div class="rate-header">
+              <h3>USD/BRL</h3>
+              <span class="rate-icon">$</span>
+            </div>
+            <div class="rate-value">5,5625</div>
+            <div class="rate-info">
+              <div class="rate-date">21/07/2025</div>
+              <div class="rate-variation positive">+0,29%</div>
+            </div>
+          </div>
+          
+          <div class="rate-box eur-box">
+            <div class="rate-header">
+              <h3>EUR/BRL</h3>
+              <span class="rate-icon">€</span>
+            </div>
+            <div class="rate-value">6,5109</div>
+            <div class="rate-info">
+              <div class="rate-date">21/07/2025</div>
+              <div class="rate-variation positive">+0,79%</div>
+            </div>
+          </div>
+          
+          <div class="rate-box cny-box">
+            <div class="rate-header">
+              <h3>CNY/BRL</h3>
+              <span class="rate-icon">¥</span>
+            </div>
+            <div class="rate-value">0,7760</div>
+            <div class="rate-info">
+              <div class="rate-date">21/07/2025</div>
+              <div class="rate-variation positive">+0,78%</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Controles Compactos -->
+      <section class="card filters-section">
+        <div class="card__body">
+          <form id="form-filtros" class="compact-filters">
+            <div class="filter-group">
+              <label class="form-label" for="start-date">Data inicial</label>
+              <input class="form-control compact" type="date" id="start-date" min="2023-01-02" />
+            </div>
+            <div class="filter-group">
+              <label class="form-label" for="end-date">Data final</label>
+              <input class="form-control compact" type="date" id="end-date" />
+            </div>
+            <div class="filter-group">
+              <label class="form-label">Frequência</label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="freq" value="diaria" /> Diária
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="freq" value="mensal" checked /> Mensal
+                </label>
+              </div>
+            </div>
+            <div class="filter-actions">
+              <button id="btn-atualizar" type="submit" class="btn btn--primary btn--sm">Atualizar</button>
+              <button id="btn-exportar" type="button" class="btn btn--secondary btn--sm">Exportar CSV</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Mensagens -->
+      <section id="status-area" class="hidden"></section>
+
+      <!-- Gráfico Principal - Largura Total -->
+      <section class="chart-full-width">
+        <div class="card">
+          <div class="card__header">
+            <h2>Cotações das Moedas (vs BRL)</h2>
+          </div>
+          <div class="card__body">
+            <div id="chart-cotacoes" class="plot-full"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gráfico de Paridades Específico -->
+      <section class="chart-full-width">
+        <div class="card">
+          <div class="card__header">
+            <h2>Paridades - EUR/BRL vs USD/BRL e EUR/BRL vs CNY/BRL</h2>
+          </div>
+          <div class="card__body">
+            <div id="chart-paridades-especifico" class="plot-full"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="container py-16">
+      <p class="text-sm">© 2025 Painel Cambial Impress. Dados PTAX - Banco Central do Brasil.</p>
+    </footer>
+  </body>
+</html>
